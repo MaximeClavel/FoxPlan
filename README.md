@@ -76,8 +76,23 @@ FoxPlan is a fully static SPA (no backend, data stored per browser), so it runs 
 The build uses a relative base path (`base: './'`), so it works at
 `https://<user>.github.io/<repo>/` without extra configuration.
 
+### Default key from a GitHub secret
+
+To ship the site with a default Google Maps key (so visitors don't have to enter their own):
+
+1. In the repository, go to **Settings → Secrets and variables → Actions → New repository secret**.
+2. Name it `VITE_GOOGLE_MAPS_API_KEY` and paste your key.
+3. The deploy workflow injects it into the build. The runtime key entered in
+   **Settings → Google Maps** still overrides it per browser.
+
+> **Security:** a `VITE_` variable is embedded into the public JavaScript bundle, so this key is
+> **not secret** once deployed — anyone can read it from the site. That is unavoidable for any
+> browser Maps key. Protect it in Google Cloud by **restricting it to your Pages URL**
+> (`https://<user>.github.io/*`) and to only the **Maps JavaScript, Places and Routes** APIs, and
+> set billing budgets/alerts.
+
 > **Important:** add your Pages URL to the Google Maps key's allowed HTTP referrers, e.g.
-> `https://<user>.github.io/*`. The app ships without a key — each visitor enters their own in
+> `https://<user>.github.io/*`. Without a default key, each visitor enters their own in
 > **Settings → Google Maps**.
 
 ## Data & privacy

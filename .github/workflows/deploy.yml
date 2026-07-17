@@ -25,6 +25,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Default browser Maps key baked into the build from a GitHub secret.
+          # Note: VITE_ vars are embedded in the public bundle — this key is NOT
+          # secret once deployed. Protect it with HTTP referrer + API restrictions
+          # in Google Cloud (allow https://<user>.github.io/*).
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
