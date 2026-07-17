@@ -98,3 +98,93 @@ export async function searchPlacesByText(
     })
     .filter((result): result is PlaceSearchResult => result !== null);
 }
+
+export interface AutocompleteSuggestion {
+  placeId: string;
+  primaryText: string;
+  secondaryText?: string;
+}
+
+/**
+ * Live autocomplete predictions for the search box.
+ * A session token groups keystrokes into one billable session.
+ */
+export async function fetchAutocomplete(
+  input: string,
+  options: { bias?: GeoPoint; sessionToken?: unknown } = {},
+): Promise<AutocompleteSuggestion[]> {
+  const query = input.trim();
+  if (query.length < 2) return [];
+
+  const placesLib = (await google.maps.importLibrary(
+    'places',
+  )) as google.maps.PlacesLibrary;
+  const { AutocompleteSuggestion: SuggestionApi } = placesLib;
+
+  const request: google.maps.places.AutocompleteRequest = {
+    input: query,
+    sessionToken: options.sessionToken as google.maps.places.AutocompleteSessionToken,
+  };
+  if (options.bias) {
+    request.locationBias = { center: options.bias, radius: 30_000 };
+  }
+
+  const { suggestions } = await SuggestionApi.fetchAutocompleteSuggestions(request);
+
+  return suggestions
+    .map((suggestion): AutocompleteSuggestion | null => {
+      const prediction = suggestion.placePrediction;
+      if (!prediction?.placeId) return null;
+      return {
+        placeId: prediction.placeId,
+        primaryText: prediction.mainText?.text ?? prediction.text?.text ?? '',
+        secondaryText: prediction.secondaryText?.text ?? undefined,
+      };
+    })
+    .filter((item): item is AutocompleteSuggestion => item !== null);
+}
+
+/** Creates a session token for a run of autocomplete keystrokes. */
+export async function createAutocompleteSessionToken(): Promise<unknown> {
+  const placesLib = (await google.maps.importLibrary(
+    'places',
+  )) as google.maps.PlacesLibrary;
+  return new placesLib.AutocompleteSessionToken();
+}
+
+/** Fetches full details for a selected suggestion. */
+export async function getPlaceDetails(
+  placeId: string,
+  sessionToken?: unknown,
+): Promise<PlaceSearchResult | null> {
+  const { Place } = (await google.maps.importLibrary('places')) as google.maps.PlacesLibrary;
+  const place = new Place({
+    id: placeId,
+    requestedLanguage: undefined,
+  });
+  await place.fetchFields({
+    fields: [
+      'id',
+      'displayName',
+      'location',
+      'formattedAddress',
+      'rating',
+      'priceLevel',
+      'types',
+      'googleMapsURI',
+    ],
+  });
+  void sessionToken;
+  const location = place.location;
+  if (!location) return null;
+  return {
+    placeId: place.id,
+    displayName: place.displayName ?? '',
+    coordinates: { lat: location.lat(), lng: location.lng() },
+    address: place.formattedAddress ?? undefined,
+    rating: place.rating ?? undefined,
+    priceLevel: mapPriceLevel(place.priceLevel),
+    types: place.types ?? [],
+    googleMapsUri: place.googleMapsURI ?? undefined,
+  };
+}

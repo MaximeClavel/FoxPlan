@@ -39,6 +39,7 @@ interface WorkspaceValue {
   searchError: string | null;
   runSearch(query: string, options?: { category?: PlaceCategory; bias?: GeoPoint }): Promise<void>;
   clearSearch(): void;
+  presentPlace(result: PlaceSearchResult): void;
 
   selectedPlaceId: string | null;
   selectPlace(id: string | null): void;
@@ -104,6 +105,14 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
         requestSeq.current++;
         setSearchResults([]);
         setSearchError(null);
+      },
+      presentPlace(result) {
+        requestSeq.current++;
+        setActivePanel('places');
+        setSearchResults([result]);
+        setSearchError(null);
+        setSelectedPlaceId(result.placeId);
+        setFocusPoint(result.coordinates);
       },
       selectedPlaceId,
       selectPlace: setSelectedPlaceId,
