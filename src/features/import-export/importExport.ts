@@ -48,8 +48,25 @@ export function parseImport(jsonText: string): ParseResult {
   };
 }
 
-export async function exportToBlob(repo: DataPortRepository): Promise<Blob> {
-  const data = await repo.exportAll();
+/** Restricts an ExportData payload to the given trip ids. */
+export function filterByTripIds(data: ExportData, tripIds: string[]): ExportData {
+  const ids = new Set(tripIds);
+  return {
+    trips: data.trips.filter((trip) => ids.has(trip.id)),
+    savedPlaces: data.savedPlaces.filter((place) => ids.has(place.tripId)),
+    accommodationCandidates: data.accommodationCandidates.filter((candidate) =>
+      ids.has(candidate.tripId),
+    ),
+    routePlans: data.routePlans.filter((route) => ids.has(route.tripId)),
+  };
+}
+
+export async function exportToBlob(
+  repo: DataPortRepository,
+  options?: { tripIds?: string[] },
+): Promise<Blob> {
+  const all = await repo.exportAll();
+  const data = options?.tripIds ? filterByTripIds(all, options.tripIds) : all;
   const envelope = buildEnvelope(data);
   return new Blob([JSON.stringify(envelope, null, 2)], { type: 'application/json' });
 }
@@ -58,14 +75,17 @@ export async function importFromText(
   repo: DataPortRepository,
   jsonText: string,
   strategy: 'replace' | 'merge',
+  options?: { tripIds?: string[] },
 ): Promise<ParseResult> {
   const result = parseImport(jsonText);
   if (!result.ok || !result.data) return result;
 
+  const data = options?.tripIds ? filterByTripIds(result.data, options.tripIds) : result.data;
+
   if (strategy === 'replace') {
-    await repo.replaceAll(result.data);
+    await repo.replaceAll(data);
   } else {
-    await repo.mergeAll(result.data);
+    await repo.mergeAll(data);
   }
-  return result;
+  return { ok: true, data };
 }

@@ -82,8 +82,12 @@ interface AppStoreValue {
   setRouteMode(mode: TransportMode): Promise<void>;
 
   // Data
-  exportData(): Promise<Blob>;
-  importData(text: string, strategy: 'replace' | 'merge'): Promise<boolean>;
+  exportData(scope: 'all' | 'active'): Promise<Blob | null>;
+  importData(
+    text: string,
+    strategy: 'replace' | 'merge',
+    tripIds?: string[],
+  ): Promise<boolean>;
 }
 
 const AppStoreContext = createContext<AppStoreValue | null>(null);
@@ -343,11 +347,20 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
         setRoutePlan(updated);
       },
 
-      async exportData() {
+      async exportData(scope) {
+        if (scope === 'active') {
+          if (!activeTripId) return null;
+          return exportToBlob(dataPortRepository, { tripIds: [activeTripId] });
+        }
         return exportToBlob(dataPortRepository);
       },
-      async importData(text, strategy) {
-        const result = await importFromText(dataPortRepository, text, strategy);
+      async importData(text, strategy, tripIds) {
+        const result = await importFromText(
+          dataPortRepository,
+          text,
+          strategy,
+          tripIds && tripIds.length > 0 ? { tripIds } : undefined,
+        );
         if (!result.ok) return false;
         const refreshed = await tripRepository.list();
         setTrips(refreshed);
