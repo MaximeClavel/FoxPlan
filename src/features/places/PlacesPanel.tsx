@@ -148,6 +148,35 @@ export function PlacesPanel() {
                     </button>
                   </div>
                   <span className="chip">{t(`category.${place.category}`)}</span>
+                  <div className="grid-2" style={{ marginTop: 8 }}>
+                    <div className="field">
+                      <label htmlFor={`visit-start-${place.id}`}>{t('places.visitStart')}</label>
+                      <input
+                        id={`visit-start-${place.id}`}
+                        type="date"
+                        defaultValue={place.visitStartDate ?? ''}
+                        onClick={(event) => event.stopPropagation()}
+                        onChange={(event) => {
+                          const value = event.target.value || undefined;
+                          updateSavedPlace({ ...place, visitStartDate: value });
+                        }}
+                      />
+                    </div>
+                    <div className="field">
+                      <label htmlFor={`visit-end-${place.id}`}>{t('places.visitEnd')}</label>
+                      <input
+                        id={`visit-end-${place.id}`}
+                        type="date"
+                        min={place.visitStartDate || undefined}
+                        defaultValue={place.visitEndDate ?? ''}
+                        onClick={(event) => event.stopPropagation()}
+                        onChange={(event) => {
+                          const value = event.target.value || undefined;
+                          updateSavedPlace({ ...place, visitEndDate: value });
+                        }}
+                      />
+                    </div>
+                  </div>
                   <textarea
                     placeholder={t('places.notes')}
                     defaultValue={place.notes ?? ''}

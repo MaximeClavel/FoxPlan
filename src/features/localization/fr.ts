@@ -55,6 +55,9 @@ export const fr = {
   'places.category': 'Catégorie',
   'places.rating': 'Note',
   'places.openInGoogle': 'Voir sur Google Maps',
+  'places.visitWhen': 'Quand ?',
+  'places.visitStart': 'Date',
+  'places.visitEnd': 'Fin (facultatif)',
 
   'proximity.title': 'Proximité',
   'proximity.straightLine': 'À vol d’oiseau',
@@ -72,6 +75,7 @@ export const fr = {
   'routes.mode.BICYCLING': 'Vélo',
   'routes.mode.WALKING': 'Marche',
   'routes.mode.TWO_WHEELER': 'Deux-roues',
+  'routes.mode.FLIGHT': 'Avion',
   'routes.total': 'Total',
   'routes.duration': 'Durée',
   'routes.distance': 'Distance',
@@ -79,6 +83,19 @@ export const fr = {
   'routes.moveUp': 'Monter',
   'routes.moveDown': 'Descendre',
   'routes.removeStop': 'Retirer l’étape',
+  'routes.tab.route': 'Calcul de trajet',
+  'routes.tab.overview': 'Aperçu du voyage',
+
+  'overview.title': 'Aperçu du voyage',
+  'overview.intro':
+    'Les lieux enregistrés avec une date sont classés chronologiquement. Le temps de trajet entre chaque étape est calculé automatiquement.',
+  'overview.noPlaces':
+    'Ajoutez une date à vos lieux enregistrés pour construire la chronologie du voyage.',
+  'overview.undated': 'Lieux sans date',
+  'overview.flightNoRoute': 'Vol — pas de tracé',
+  'overview.recalculate': 'Recalculer les trajets',
+  'overview.calculating': 'Calcul des trajets…',
+  'overview.segmentMode': 'Mode',
 
   'accommodation.title': 'Hébergements',
   'accommodation.searchTitle': 'Rechercher un hébergement',

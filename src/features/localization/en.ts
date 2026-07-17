@@ -57,6 +57,9 @@ export const en: TranslationDict = {
   'places.category': 'Category',
   'places.rating': 'Rating',
   'places.openInGoogle': 'View on Google Maps',
+  'places.visitWhen': 'When?',
+  'places.visitStart': 'Date',
+  'places.visitEnd': 'End (optional)',
 
   'proximity.title': 'Proximity',
   'proximity.straightLine': 'Straight line',
@@ -74,6 +77,7 @@ export const en: TranslationDict = {
   'routes.mode.BICYCLING': 'Cycling',
   'routes.mode.WALKING': 'Walking',
   'routes.mode.TWO_WHEELER': 'Two-wheeler',
+  'routes.mode.FLIGHT': 'Flight',
   'routes.total': 'Total',
   'routes.duration': 'Duration',
   'routes.distance': 'Distance',
@@ -81,6 +85,18 @@ export const en: TranslationDict = {
   'routes.moveUp': 'Move up',
   'routes.moveDown': 'Move down',
   'routes.removeStop': 'Remove stop',
+  'routes.tab.route': 'Route planner',
+  'routes.tab.overview': 'Trip overview',
+
+  'overview.title': 'Trip overview',
+  'overview.intro':
+    'Saved places with a date are ordered chronologically. Travel time between each step is computed automatically.',
+  'overview.noPlaces': 'Add a date to your saved places to build the trip timeline.',
+  'overview.undated': 'Places without a date',
+  'overview.flightNoRoute': 'Flight — no route drawn',
+  'overview.recalculate': 'Recalculate travel',
+  'overview.calculating': 'Computing travel…',
+  'overview.segmentMode': 'Mode',
 
   'accommodation.title': 'Stays',
   'accommodation.searchTitle': 'Search a stay',

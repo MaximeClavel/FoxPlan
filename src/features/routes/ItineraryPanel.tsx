@@ -9,8 +9,38 @@ import {
   SUPPORTED_MODES,
   type RouteResult,
 } from '@/infrastructure/google/routesGateway';
+import { TripOverview } from './TripOverview';
+
+type SubTab = 'route' | 'overview';
 
 export function ItineraryPanel() {
+  const { t } = useI18n();
+  const [subTab, setSubTab] = useState<SubTab>('overview');
+
+  return (
+    <div className="stack">
+      <div className="row" style={{ gap: 6 }}>
+        <button
+          className={`chip ${subTab === 'overview' ? 'chip--active' : ''}`}
+          aria-pressed={subTab === 'overview'}
+          onClick={() => setSubTab('overview')}
+        >
+          {t('routes.tab.overview')}
+        </button>
+        <button
+          className={`chip ${subTab === 'route' ? 'chip--active' : ''}`}
+          aria-pressed={subTab === 'route'}
+          onClick={() => setSubTab('route')}
+        >
+          {t('routes.tab.route')}
+        </button>
+      </div>
+      {subTab === 'overview' ? <TripOverview /> : <RoutePlanner />}
+    </div>
+  );
+}
+
+function RoutePlanner() {
   const { effectiveMapsKey, routePlan, savedPlaces, candidates, setRouteStops, setRouteMode } =
     useAppStore();
   const { setRoutePath, focusOn } = useWorkspace();

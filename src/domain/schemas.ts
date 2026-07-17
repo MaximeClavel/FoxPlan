@@ -31,6 +31,7 @@ export const transportModeSchema = z.enum([
   'BICYCLING',
   'WALKING',
   'TWO_WHEELER',
+  'FLIGHT',
 ]);
 
 export const providerSchema = z.enum(['airbnb', 'booking', 'kayak', 'other']);
@@ -43,6 +44,8 @@ export const savedPlaceSchema = z.object({
   notes: z.string().optional(),
   tags: z.array(z.string()).default([]),
   dayIds: z.array(z.string()).default([]),
+  visitStartDate: z.string().optional(),
+  visitEndDate: z.string().optional(),
   rating: z.number().min(0).max(5).optional(),
   priceLevel: z.number().int().min(0).max(4).optional(),
   createdAt: z.string().datetime(),
