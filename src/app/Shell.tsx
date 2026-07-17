@@ -45,7 +45,7 @@ export function Shell() {
     <div className="shell">
       <header className="shell__header">
         <div className="shell__brand">
-          <img src="/favicon.svg" alt="" aria-hidden="true" />
+          <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" aria-hidden="true" />
           <span>{t('app.name')}</span>
         </div>
         <div className="header-actions">
