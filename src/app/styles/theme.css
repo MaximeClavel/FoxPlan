@@ -1,0 +1,127 @@
+:root {
+  /* Dark theme tokens (default) */
+  --color-bg: #0b0f17;
+  --color-surface: #121826;
+  --color-surface-2: #1a2233;
+  --color-surface-3: #232d42;
+  --color-border: #2b3752;
+  --color-border-strong: #3a4869;
+  --color-text: #e8edf7;
+  --color-text-muted: #9aa7c2;
+  --color-text-faint: #6b7896;
+  --color-primary: #f4813f;
+  --color-primary-hover: #ff9455;
+  --color-primary-contrast: #1a0f06;
+  --color-accent: #4f9dff;
+  --color-success: #43c187;
+  --color-warning: #f5b544;
+  --color-danger: #f16565;
+  --focus-ring: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-accent);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-panel: 0 10px 30px rgba(0, 0, 0, 0.45);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --font-sans: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+}
+
+:root.theme-light {
+  --color-bg: #f4f6fb;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef1f8;
+  --color-surface-3: #e2e7f2;
+  --color-border: #d3daea;
+  --color-border-strong: #b9c3da;
+  --color-text: #16203a;
+  --color-text-muted: #4a5878;
+  --color-text-faint: #77839e;
+  --color-primary: #e5702b;
+  --color-primary-hover: #cf6120;
+  --color-primary-contrast: #ffffff;
+  --shadow-panel: 0 8px 24px rgba(20, 30, 60, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.45;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 var(--space-3);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  width: 100%;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-faint);
+}
+
+label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-3);
+  border-radius: 20px;
+}
