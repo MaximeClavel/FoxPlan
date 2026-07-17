@@ -63,7 +63,11 @@ interface AppStoreValue {
   selectTrip(id: string): Promise<void>;
 
   // Places
-  savePlace(result: PlaceSearchResult, category: PlaceCategory): Promise<void>;
+  savePlace(
+    result: PlaceSearchResult,
+    category: PlaceCategory,
+    extra?: { visitStartDate?: string; visitEndDate?: string; notes?: string },
+  ): Promise<void>;
   updateSavedPlace(place: SavedPlace): Promise<void>;
   removeSavedPlace(id: string): Promise<void>;
 
@@ -272,7 +276,7 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
         await loadTripData(id);
       },
 
-      async savePlace(result, category) {
+      async savePlace(result, category, extra) {
         if (!activeTripId) return;
         const place: SavedPlace = {
           id: createId('place'),
@@ -286,6 +290,9 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
           },
           tags: [],
           dayIds: [],
+          visitStartDate: extra?.visitStartDate,
+          visitEndDate: extra?.visitEndDate,
+          notes: extra?.notes,
           rating: result.rating,
           priceLevel: result.priceLevel,
           createdAt: nowIso(),

@@ -36,6 +36,7 @@ export const fr = {
   'map.noTrip': 'Sélectionnez ou créez un voyage pour afficher la carte.',
 
   'filters.title': 'Filtres',
+  'category.city': 'Villes',
   'category.restaurant': 'Restaurants',
   'category.activity': 'Activités',
   'category.attraction': 'Attractions',
@@ -58,6 +59,8 @@ export const fr = {
   'places.visitWhen': 'Quand ?',
   'places.visitStart': 'Date',
   'places.visitEnd': 'Fin (facultatif)',
+  'places.edit': 'Modifier',
+  'places.noDate': 'Aucune date',
 
   'proximity.title': 'Proximité',
   'proximity.straightLine': 'À vol d’oiseau',

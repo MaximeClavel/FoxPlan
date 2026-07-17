@@ -1,6 +1,7 @@
 import type { PlaceCategory } from '@/domain/schemas';
 
 export const CATEGORY_COLOR: Record<PlaceCategory, string> = {
+  city: '#6c8cff',
   restaurant: '#f4813f',
   activity: '#4f9dff',
   attraction: '#a06bff',
@@ -11,6 +12,7 @@ export const CATEGORY_COLOR: Record<PlaceCategory, string> = {
 };
 
 export const CATEGORY_ICON: Record<PlaceCategory, string> = {
+  city: '🏙️',
   restaurant: '🍽️',
   activity: '🎯',
   attraction: '⭐',
@@ -39,6 +41,15 @@ export function categoryFromTypes(types: string[]): PlaceCategory {
   if (set.has('tourist_attraction') || set.has('museum') || set.has('park')) {
     return 'attraction';
   }
-  if (set.has('amusement_park') || set.has('point_of_interest')) return 'activity';
+  if (set.has('amusement_park')) return 'activity';
+  if (
+    set.has('locality') ||
+    set.has('administrative_area_level_1') ||
+    set.has('administrative_area_level_2') ||
+    set.has('political')
+  ) {
+    return 'city';
+  }
+  if (set.has('point_of_interest')) return 'activity';
   return 'other';
 }

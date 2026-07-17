@@ -11,6 +11,7 @@ import {
 } from '@/infrastructure/google/placesGateway';
 
 const CATEGORY_KEYS: Record<PlaceCategory, `category.${PlaceCategory}`> = {
+  city: 'category.city',
   restaurant: 'category.restaurant',
   activity: 'category.activity',
   attraction: 'category.attraction',

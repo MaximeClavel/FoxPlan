@@ -41,7 +41,7 @@ function sortByDate(places: SavedPlace[]): SavedPlace[] {
 }
 
 export function TripOverview() {
-  const { savedPlaces, effectiveMapsKey, updateSavedPlace } = useAppStore();
+  const { savedPlaces, effectiveMapsKey } = useAppStore();
   const { setRoutePath, focusOn } = useWorkspace();
   const { t, formatDate, formatDuration, formatDistance } = useI18n();
 
@@ -167,40 +167,9 @@ export function TripOverview() {
                 >
                   {CATEGORY_ICON[place.category]} {place.reference.displayName}
                 </button>
-                <div className="grid-2" style={{ marginTop: 8 }}>
-                  <div className="field">
-                    <label htmlFor={`ov-start-${place.id}`}>{t('places.visitStart')}</label>
-                    <input
-                      id={`ov-start-${place.id}`}
-                      type="date"
-                      defaultValue={place.visitStartDate ?? ''}
-                      onChange={(event) =>
-                        updateSavedPlace({
-                          ...place,
-                          visitStartDate: event.target.value || undefined,
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="field">
-                    <label htmlFor={`ov-end-${place.id}`}>{t('places.visitEnd')}</label>
-                    <input
-                      id={`ov-end-${place.id}`}
-                      type="date"
-                      min={place.visitStartDate || undefined}
-                      defaultValue={place.visitEndDate ?? ''}
-                      onChange={(event) =>
-                        updateSavedPlace({
-                          ...place,
-                          visitEndDate: event.target.value || undefined,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
                 {place.visitStartDate && (
                   <div className="faint" style={{ marginTop: 4 }}>
-                    {formatDate(place.visitStartDate)}
+                    📅 {formatDate(place.visitStartDate)}
                     {place.visitEndDate ? ` → ${formatDate(place.visitEndDate)}` : ''}
                   </div>
                 )}

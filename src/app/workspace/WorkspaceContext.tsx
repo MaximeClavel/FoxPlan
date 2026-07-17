@@ -21,6 +21,7 @@ export type PanelTab =
   | 'data';
 
 export const ALL_CATEGORIES: PlaceCategory[] = [
+  'city',
   'restaurant',
   'activity',
   'attraction',

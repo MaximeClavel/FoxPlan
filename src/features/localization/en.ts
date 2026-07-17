@@ -38,6 +38,7 @@ export const en: TranslationDict = {
   'map.noTrip': 'Select or create a trip to display the map.',
 
   'filters.title': 'Filters',
+  'category.city': 'Cities',
   'category.restaurant': 'Restaurants',
   'category.activity': 'Activities',
   'category.attraction': 'Attractions',
@@ -60,6 +61,8 @@ export const en: TranslationDict = {
   'places.visitWhen': 'When?',
   'places.visitStart': 'Date',
   'places.visitEnd': 'End (optional)',
+  'places.edit': 'Edit',
+  'places.noDate': 'No date',
 
   'proximity.title': 'Proximity',
   'proximity.straightLine': 'Straight line',

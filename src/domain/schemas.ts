@@ -16,6 +16,7 @@ export const placeReferenceSchema = z.object({
 });
 
 export const placeCategorySchema = z.enum([
+  'city',
   'restaurant',
   'activity',
   'attraction',
