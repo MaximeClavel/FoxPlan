@@ -86,7 +86,7 @@ function PlaceEditor({
 }
 
 function ResultCard({ result }: { result: PlaceSearchResult }) {
-  const { savePlace, savedPlaces } = useAppStore();
+  const { savePlace } = useAppStore();
   const { selectPlace, selectedPlaceId, focusOn } = useWorkspace();
   const { t } = useI18n();
   const [draft, setDraft] = useState<PlaceDraft>({
@@ -96,9 +96,6 @@ function ResultCard({ result }: { result: PlaceSearchResult }) {
     notes: '',
   });
 
-  const alreadySaved = savedPlaces.some(
-    (place) => place.reference.placeId === result.placeId,
-  );
   const selected = selectedPlaceId === result.placeId;
 
   const save = () => {
@@ -129,25 +126,22 @@ function ResultCard({ result }: { result: PlaceSearchResult }) {
         )}
       </div>
 
-      {!alreadySaved && (
-        <div style={{ marginTop: 10 }}>
-          <PlaceEditor
-            draft={draft}
-            onChange={(patch) => setDraft((prev) => ({ ...prev, ...patch }))}
-          />
-        </div>
-      )}
+      <div style={{ marginTop: 10 }}>
+        <PlaceEditor
+          draft={draft}
+          onChange={(patch) => setDraft((prev) => ({ ...prev, ...patch }))}
+        />
+      </div>
 
       <div className="row" style={{ marginTop: 10, gap: 6 }}>
         <button
           className="btn btn--primary btn--sm"
-          disabled={alreadySaved}
           onClick={(event) => {
             event.stopPropagation();
             save();
           }}
         >
-          {alreadySaved ? '✓' : t('places.save')}
+          {t('places.save')}
         </button>
         {result.googleMapsUri && (
           <a
